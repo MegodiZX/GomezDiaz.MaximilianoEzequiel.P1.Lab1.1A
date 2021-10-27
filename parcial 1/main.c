@@ -2,7 +2,6 @@
 Parcial 1 Laboratorio Maximiliano E Gomez Diaz
 *******************************************************************************/
 #include <stdio.h>
-#include "Fecha.h"
 #include "TipoDeMascota.h"
 #include "Color.h"
 #include "Mascota.h"
@@ -18,12 +17,15 @@ int main()
     eColor listaColores[5];
     eServicio listaServicios[3];
     eTrabajo listaTrabajos[T];
-    int nextId=10;
+    int nextId=100;
+    int cargoMascota=0;
+    int IdTrabajo=0;
     
     inicializarMascotas(listaMascotas,T);
     HarcodearTipos(listaTipos);
     HarcodearColores(listaColores);
     HarcodearServicios(listaServicios);
+    inicializarTrabajos(listaTrabajos,T);
     
     do
     {
@@ -32,17 +34,18 @@ int main()
         printf("3.Baja Mascota\n");
         printf("4.Listar mascotas (ordenadas por tipo y nombre)\n");
         printf("5.Listar tipos \n");
-        printf("6.Listar colores)\n");
-        printf("7.Listar colores)\n");
-        printf("8.Alta trabajo)\n");
-        printf("9.Listrar trabajo)\n");
+        printf("6.Listar colores\n");
+        printf("7.Listar colores\n");
+        printf("8.Alta trabajo\n");
+        printf("9.Listrar trabajo\n");
         printf("0.Salir\n");
-        printf("Elija una opcion: ");
+        printf("Elija una opcion: \n");
         scanf("%d",&respuesta);
         switch (respuesta)
 	    {
 	        case 1:
 	        altaMascota(listaMascotas,T,&nextId);
+	        cargoMascota=1;
 	        break;
 	        case 2:
 	        mostrarTodasLasMascotas(listaMascotas,T);
@@ -66,7 +69,16 @@ int main()
 	        mostrarServicios(listaServicios,3);
 	        break;
 	        case 8:
-	        altaTrabajo(listaTrabajos,T);
+	        if(cargoMascota==1)
+	        {
+	            mostrarTodasLasMascotas(listaMascotas,T);
+	            mostrarServicios(listaServicios,3);
+	            altaTrabajo(listaTrabajos,T,&IdTrabajo);
+	        }else
+	        {
+	            printf("primero ingrese una mascota\n");
+	        }
+	        
 	        break;
 	        case 9:
 	        mostrarTrabajos(listaTrabajos,T);

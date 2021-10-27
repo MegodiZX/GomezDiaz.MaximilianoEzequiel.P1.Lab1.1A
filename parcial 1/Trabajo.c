@@ -1,22 +1,49 @@
+#include <stdio.h>
 #include "Trabajo.h"
 #define LIBRE 1
 #define OCUPADO -1
 #define ELIMINADO 0
 
 void mostrarTrabajo(eTrabajo lista)
-{
-    printf("\t%d \t%s \t%d \n",lista.id,lista.descripcion,lista.precio,lista.fecha);
+{ 
+    printf("\t%d      \t%d       \t%d/%d/%d\n",lista.idMascota,lista.idServicio,lista.fecha.dia,lista.fecha.mes,lista.fecha.anio);
 }
 
 void mostrarTrabajos(eTrabajo lista[],int tam)
 {
-    printf("\tId \tIdMascota \tIdservicio \tfecha\n");
-    if(lista!=NULL)
+    int todoOk=0;
+    int flag=1;
+    
+    if(lista!=NULL&& tam>0)
     {
-        mostrarTrabajo(lista[i]);
+        printf("                 Listado Trabajos        \n");
+        printf("\tId mascota \tId servicio \tfecha\n");
+        for(int i=0;i<tam;i++)
+        {
+            if(lista[i].isEmpty==OCUPADO)
+            {
+                
+                mostrarTrabajo(lista[i]);
+                flag=0;
+            }
+            
+        }
+        if(flag)
+        {
+            printf("               No se cargaron Trabajos       \n");
+        }
+        
     }
 }
 
+void inicializarTrabajos(eTrabajo lista[], int tam)
+{
+    int i;
+    for(i=0; i<tam; i++)
+    {
+        lista[i].isEmpty = 1;
+    }
+}
 
 int buscarLibreTrabajo(eTrabajo lista[],int tam)
 {
@@ -34,36 +61,40 @@ int buscarLibreTrabajo(eTrabajo lista[],int tam)
        }
     }else
     {
-        printf("Error al buscar libre, array vacio o tamaño menor a 0");
+        printf("Error al buscar libre, array vacio o tamaño menor a 0\n");
     }
     return indice;
 }
 
-
-int altaTrabajo(eTrabajo lista[],int tam,int* pIdT);
+int altaTrabajo(eTrabajo lista[],int tam,int* pId)
 {
     int todoOk=0;
     int indice;
     eTrabajo auxTrabajo;
-    if(lista!=NULL && tam >0 && pIdT!=NULL)
+    if(lista!=NULL && tam >0 && pId!=NULL)
     {
-        printf("\n          Alta Mascota        \n");
         indice= buscarLibreTrabajo(lista, tam);
         if(indice==OCUPADO)
         {
-            printf("no hay lugar en el sistema \n");
+            printf("no se pueden cargar mas trabajos \n");
         }else
         {
-            auxTrabajo.id=*pIdT;
-            (*pIdT)++;
+            auxTrabajo.id=*pId;
+            (*pId)++;
             
             printf("Ingrese id mascota: ");
             scanf("%d",&auxTrabajo.idMascota);
             
-            printf("Ingrese id id Servicio: ");
+            printf("Ingrese id Servicio: ");
             scanf("%d",&auxTrabajo.idServicio);
             
-            auxMascota.isEmpty=OCUPADO;
+            printf("Ingrese fecha (dia, mes, anio): ");
+            scanf("%d",&auxTrabajo.fecha.dia);
+            scanf("%d",&auxTrabajo.fecha.mes);
+            scanf("%d",&auxTrabajo.fecha.anio);
+            
+            
+            auxTrabajo.isEmpty=OCUPADO;
             
             lista[indice]=auxTrabajo;
             todoOk=1;
