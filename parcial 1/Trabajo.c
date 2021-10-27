@@ -103,3 +103,30 @@ int altaTrabajo(eTrabajo lista[],int tam,int* pId)
     }
     return todoOk;
 }
+
+int HarcodearTrabajos(eTrabajo lista[])
+{
+    int id;//autoincremental
+    int idMascota;//debe existir
+    int idServicio;//debe existir
+    eFecha fecha;// validar dia,mes,año
+    int isEmpty;
+    int todoOk=0;
+    if(lista!=NULL)
+    {
+        int id[5]={1,2,3,4,5};
+        int idMascota[5]={100,100,101,100,101};
+        int idServicio[5]={20000,20000,20001,20002,20000};
+        eFecha fecha[5]={{12,3,2021},{4,9,2021},{1,9,2021},{28,11,2021},{17,6,2021}};
+        for(int i=0;i<5;i++)
+        {
+            lista[i].id=id[i];
+            lista[i].idMascota=idMascota[i];
+            lista[i].idServicio=idServicio[i];
+            lista[i].fecha=fecha[i];
+            lista[i].isEmpty=OCUPADO;
+        }
+        todoOk=1;
+    }
+    return todoOk;
+}

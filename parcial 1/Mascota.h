@@ -29,4 +29,9 @@ void ordenarMascotasPorNombre(eMascota listado[], int tam);
 //ordena la lista por nombre
 void ordenarMascotasPorTipoYNombre(eMascota listado[], int tam);
 //ordena la lista por tipo y nombre y muestra todas las mascotas cargadas
-
+void mostrarMascotaColorSelec(eMascota listado[], int tam);
+void promedioVacunados(eMascota listado[], int tam);
+void listarMascotasDeMenorEdad(eMascota listado[], int tam);
+void listarMascotasSeparadasPorTipo(eMascota listado[], int tam);
+int ContarColorYTipo(eMascota listado[], int tam);
+void ColorMasCantidadMascota(eMascota listado[], int tam);

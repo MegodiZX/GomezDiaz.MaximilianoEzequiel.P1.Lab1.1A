@@ -5,6 +5,7 @@
 #define OCUPADO -1
 #define ELIMINADO 0
 
+
 void inicializarMascotas(eMascota lista[], int tam)
 {
     int i;
@@ -57,11 +58,22 @@ int altaMascota(eMascota lista[],int tam,int* pId)
             __fpurge(stdin);
             scanf("%[^\n]",auxMascota.nombre);
             
-            printf("Ingrese numero del tipo (Ave 1000 Perro 1001 Roedor 1002 Gato 1003 Pez 1004)");
+            printf("Ingrese numero del tipo de mascota(Ave 1000 Perro 1001 Roedor 1002 Gato 1003 Pez 1004)");
             scanf("%d",&auxMascota.idTipo);
+            while(auxMascota.idTipo>1004||auxMascota.idTipo<1000)
+            {
+                printf("Error reingrese numero del tipo de mascota (Ave 1000 Perro 1001 Roedor 1002 Gato 1003 Pez 1004)");
+                scanf("%d",&auxMascota.idTipo);
+            }
             
-            printf("Ingrese numero del color (Negro 5000 Blanco 5001 Rojo 5002 Gris 5003 Azul 5004)");
+            printf("Ingrese numero del color de mascota (Negro 5000 Blanco 5001 Rojo 5002 Gris 5003 Azul 5004)");
             scanf("%d",&auxMascota.idColor);
+            
+            while(auxMascota.idColor>5004||auxMascota.idColor<5000)
+            {
+                printf("Error reingrese numero del color de mascota (Negro 5000 Blanco 5001 Rojo 5002 Gris 5003 Azul 5004)");
+                scanf("%d",&auxMascota.idColor);
+            }
             
             printf("Ingrese edad: ");
             scanf("%d",&auxMascota.edad);
@@ -69,6 +81,13 @@ int altaMascota(eMascota lista[],int tam,int* pId)
             printf("Ingrese Vacunado ('s' o 'n'): ");
             __fpurge(stdin);
             scanf("%c",&auxMascota.vacunado);
+            
+            while(auxMascota.vacunado!='s'&& auxMascota.vacunado!='n')
+            {
+                printf("Error reingrese Vacunado ('s' o 'n'): ");
+                __fpurge(stdin);
+                scanf("%c",&auxMascota.vacunado);
+            }
             
             auxMascota.isEmpty=OCUPADO;
             
@@ -100,24 +119,6 @@ void mostrarMascota(eMascota unaMascota)
         break;
         case 1004:
         strcpy(tipo,"Pez");
-        break;
-    }
-    switch(unaMascota.idTipo)
-    {
-        case 5000:
-        strcpy(tipo,"Negro");
-        break;
-        case 5001:
-        strcpy(tipo,"Blanco");
-        break;
-        case 5002:
-        strcpy(tipo,"Rojo");
-        break;
-        case 5003:
-        strcpy(tipo,"Gris");
-        break;
-        case 5004:
-        strcpy(tipo,"Azul");
         break;
     }
     printf("\t%d \t%s \t%s \t%d \t%d \t%c\n",unaMascota.id,unaMascota.nombre,tipo,unaMascota.idColor,unaMascota.edad,unaMascota.vacunado);
@@ -255,3 +256,209 @@ void ordenarMascotasPorTipoYNombre(eMascota listado[], int tam)
     ordenarMascotasPorNombre(listado,tam);
     ordenarMascotasPorTipo(listado,tam);
 }
+
+void mostrarMascotaColorSelec(eMascota listado[], int tam)
+{
+    int colorSelecionado;
+    printf("Ingrese numero del color de mascota (Negro 5000 Blanco 5001 Rojo 5002 Gris 5003 Azul 5004)");
+    scanf("%d",&colorSelecionado);
+    
+    while(colorSelecionado>5004||colorSelecionado<5000)
+    {
+        printf("Error reingrese numero del color de mascota (Negro 5000 Blanco 5001 Rojo 5002 Gris 5003 Azul 5004)");
+        scanf("%d",&colorSelecionado);
+    }
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].idColor==colorSelecionado)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+}
+
+void promedioVacunados(eMascota listado[], int tam)
+{
+    int vacunados=0;
+    int pacientes=0;
+    float promedioVacunados;
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].isEmpty==OCUPADO)
+        {
+            pacientes++;
+        }
+        if(listado[i].vacunado=='s')
+        {
+            vacunados++;
+        }
+    }
+    promedioVacunados=(float)vacunados/pacientes;
+    printf("El promedio de mascotas vacunadas es: %.2f\n",promedioVacunados);
+    
+}
+
+void listarMascotasDeMenorEdad(eMascota listado[], int tam)
+{
+    int menorEdad=0;
+    int bandera=0;
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].isEmpty==OCUPADO&&listado[i].edad<menorEdad||bandera==0)
+        {
+            bandera=1;
+            menorEdad=listado[i].edad;
+        }
+    }
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].isEmpty==OCUPADO&&listado[i].edad==menorEdad)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    
+}
+
+void listarMascotasSeparadasPorTipo(eMascota listado[], int tam)
+{
+    ordenarMascotasPorTipo(listado,tam);
+    printf("           ---Aves---        \n");
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].idTipo==1000)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    printf("           ---Perros---        \n");
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].idTipo==1001)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    printf("           ---Roedores---        \n");
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].idTipo==1002)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    printf("           ---Gatos---        \n");
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].idTipo==1003)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    printf("           ---Peces---        \n");
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].idTipo==1004)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    
+}
+
+int ContarColorYTipo(eMascota listado[], int tam)
+{
+    int cantidad=0;
+    int colorSelecionado;
+    int tipoSelecionado;
+    printf("Ingrese numero del color de mascota ");
+    scanf("%d",&colorSelecionado);
+    
+    while(colorSelecionado>5004||colorSelecionado<5000)
+    {
+        printf("Error reingrese numero del color de mascota ");
+        scanf("%d",&colorSelecionado);
+    }
+    
+    printf("Ingrese numero del tipo de mascota ");
+    scanf("%d",&tipoSelecionado);
+    while(tipoSelecionado>1004||tipoSelecionado<1000)
+    {
+        printf("Error reingrese numero del tipo de mascota ");
+        scanf("%d",&tipoSelecionado);
+    }
+    
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].isEmpty==OCUPADO && listado[i].idColor==colorSelecionado && listado[i].idTipo==tipoSelecionado)
+        {
+            mostrarMascota(listado[i]);
+        }
+    }
+    
+    return cantidad;
+}
+
+void ColorMasCantidadMascota(eMascota listado[], int tam)
+{
+    int colorConMasMascotas=0;//5000 5001 5002 5003 5004
+    int bandera=0;
+    int contNegro=0;
+    int contBlanco=0;
+    int contRojo=0;
+    int contGris=0;
+    int contAzul=0;
+    for(int i=0;i<tam;i++)
+    {
+        if(listado[i].isEmpty==OCUPADO)
+        {
+            colorConMasMascotas=listado[i].idColor;
+            switch(colorConMasMascotas)
+            {
+                case 5000:
+                contNegro++;
+                break;
+                case 5001:
+                contBlanco++;
+                break;
+                case 5002:
+                contRojo++;
+                break;
+                case 5003:
+                contGris++;
+                break;
+                case 5004:
+                contAzul++;
+                break;
+            }
+        }
+    }
+    if(contBlanco<contNegro&&contRojo<contNegro&&contGris<contNegro&&contAzul<contNegro)
+    {
+        colorConMasMascotas=5000;
+    }else
+    {
+        if(contRojo<contBlanco&&contGris<contBlanco&&contAzul<contBlanco)
+        {
+            colorConMasMascotas=5001;
+        }else
+        {
+            if(contGris<contRojo&&contAzul<contRojo)
+            {
+                colorConMasMascotas=5002;
+            }else
+            {
+                if(contAzul<contGris)
+                {
+                    colorConMasMascotas=5003;
+                }else
+                {
+                    colorConMasMascotas=5004;
+                }
+            }
+        }
+    }
+    
+    printf("(5000 Negro 5001 Blanco 5002 Rojo 5003 Gris 5004 Azul): %d",colorConMasMascotas);
+}
+
